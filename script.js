@@ -3,7 +3,7 @@ const logElem = document.getElementById("log")
 const startElem = document.getElementById("start")
 const stopElem = document.getElementById("stop")
 
-function gotMedia(stream) {
+function gotMedia() {
 	var peer1 = new SimplePeer({initiator: true, stream: true})
 	var peer2 = new SimplePeer()
 
@@ -42,11 +42,11 @@ async function startCapture() {
 }
 
 function stopCapture() {
-	/**if (videoElem.srcObject !== null) {
+	if (videoElem.srcObject !== null) {
 		let tracks = videoElem.srcObject.getTracks()
 		tracks.forEach(track => track.stop())
 		videoElem.srcObject = null
-	}*/
+	}
 }
 
 function dumpOptionsInfo() {
