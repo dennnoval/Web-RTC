@@ -31,10 +31,10 @@ const displayMediaOptions = {
 	audio: false
 }
 
-async function startCapture() {
+function startCapture() {
 	if (logElem !== null)
 		logElem.innerHTML = ""
-	await navigator.mediaDevices.getDisplayMedia(displayMediaOptions)
+	return navigator.mediaDevices.getDisplayMedia(displayMediaOptions)
 		.then(gotMedia)
 		.catch(err => {
 			console.error(`Error: ${err}`)
