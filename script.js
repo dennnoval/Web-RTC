@@ -1,34 +1,45 @@
-const videoElem = document.getElementById("video");
-const logElem = document.getElementById("log");
-const startElem = document.getElementById("start");
-const stopElem = document.getElementById("stop");
+const videoElem = document.getElementById("video")
+const logElem = document.getElementById("log")
+const startElem = document.getElementById("start")
+const stopElem = document.getElementById("stop")
+
+function gotMedia(stream) {
+	var peer1 = new SimplePeer({initiator: true, stream: true})
+	var peer2 = new SimplePeer()
+
+	peer1.on("signal", (data) => {
+		peer2.signal(data)
+	})
+
+	peer2.on("signal", (data) => {
+		peer1.signal(data)
+	})
+
+	peer2.on("stream", (stream) => {
+		if ("srcObject" in video) {
+			video.srcObject = stream
+		} else {
+			video.src = window.URL.createObjectURL(stream)
+		}
+	})
+}
+
 
 // Options for getDisplayMedia()
 const displayMediaOptions = {
-	video: {
-		cursor: "always"
-	},
+	video: true,
 	audio: false
-};
+}
 
 async function startCapture() {
-	if (logElem !== null)
-		logElem.innerHTML = "";
-	try {
-		videoElem.srcObject = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
-		dumpOptionsInfo();
-	} catch (err) {
-		if (videoElem != null)
-			console.error(`Error: ${err}`);
-	}
+	await navigator.mediaDevices.getUserMedia(displayMediaOptions)
+		.then(gotMedia)
+		.catch((err) => {
+			console.error(`Error: ${err}`)
+		})
 }
 
-function stopCapture() {
-	let tracks = videoElem.srcObject.getTracks();
-
-	tracks.forEach(track => track.stop());
-	videoElem.srcObject = null;
-}
+function stopCapture() {}
 
 function dumpOptionsInfo() {
 	const videoTrack = videoElem.srcObject.getVideoTracks()[0];
