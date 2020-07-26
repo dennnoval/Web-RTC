@@ -3,19 +3,19 @@ const logElem = document.getElementById("log")
 const startElem = document.getElementById("start")
 const stopElem = document.getElementById("stop")
 
-function gotMedia() {
+function gotMedia(stream) {
 	var peer1 = new SimplePeer({initiator: true, stream: true})
 	var peer2 = new SimplePeer()
 
-	peer1.on("signal", data => {
+	peer1.on('signal', data => {
 		peer2.signal(data)
 	})
 
-	peer2.on("signal", data => {
+	peer2.on('signal', data => {
 		peer1.signal(data)
 	})
 
-	peer2.on("stream", stream => {
+	peer2.on('stream', stream => {
 		if ("srcObject" in videoElem) {
 			videoElem.srcObject = stream
 		} else {
@@ -36,7 +36,7 @@ async function startCapture() {
 		logElem.innerHTML = ""
 	try {
 		videoElem.srcObject = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions).then(gotMedia)
-		dumpOptionsInfo()
+		// dumpOptionsInfo()
 	} catch (err) {
 		if (videoElem != null)
 			console.error(`Error: ${err}`)
