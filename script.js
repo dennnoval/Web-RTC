@@ -16,10 +16,10 @@ function gotMedia(stream) {
 	})
 
 	peer2.on("stream", stream => {
-		if ("srcObject" in video) {
-			video.srcObject = stream
+		if ("srcObject" in videoElem) {
+			videoElem.srcObject = stream
 		} else {
-			video.src = window.URL.createObjectURL(stream)
+			videoElem.src = window.URL.createObjectURL(stream)
 		}
 	})
 }
@@ -32,6 +32,8 @@ const displayMediaOptions = {
 }
 
 async function startCapture() {
+	if (logElem !== null)
+		logElem.innerHTML = ""
 	await navigator.mediaDevices.getDisplayMedia(displayMediaOptions)
 		.then(gotMedia)
 		.catch(err => {
