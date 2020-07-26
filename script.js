@@ -7,15 +7,15 @@ function gotMedia(stream) {
 	var peer1 = new SimplePeer({initiator: true, stream: true})
 	var peer2 = new SimplePeer()
 
-	peer1.on("signal", (data) => {
+	peer1.on("signal", data => {
 		peer2.signal(data)
 	})
 
-	peer2.on("signal", (data) => {
+	peer2.on("signal", data => {
 		peer1.signal(data)
 	})
 
-	peer2.on("stream", (stream) => {
+	peer2.on("stream", stream => {
 		if ("srcObject" in video) {
 			video.srcObject = stream
 		} else {
@@ -34,12 +34,16 @@ const displayMediaOptions = {
 async function startCapture() {
 	await navigator.mediaDevices.getDisplayMedia(displayMediaOptions)
 		.then(gotMedia)
-		.catch((err) => {
+		.catch(err => {
 			console.error(`Error: ${err}`)
 		})
 }
 
-function stopCapture() {}
+function stopCapture() {
+	let tracks = videoElem.srcObject.getTracks();
+	tracks.forEach(track => track.stop());
+	videoElem.srcObject = null;
+}
 
 function dumpOptionsInfo() {
 	const videoTrack = videoElem.srcObject.getVideoTracks()[0];
