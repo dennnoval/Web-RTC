@@ -41,10 +41,9 @@ function startCapture() {
 		if (videoElem != null)
 			console.error(`Error: ${err}`)
 	}*/
-	navigator.mediaDevices.getUserMedia({
-	  video: true,
-	  audio: true
-	}).then(gotMedia).catch(() => {})
+	navigator.mediaDevices.getDisplayMedia(displayMediaOptions)
+		.then(gotMedia)
+		.catch((err) => {console.error(`Error: ${err}`)})
 
 }
 
