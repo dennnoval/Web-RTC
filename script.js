@@ -35,7 +35,7 @@ async function startCapture() {
 	if (logElem !== null)
 		logElem.innerHTML = ""
 	try {
-		videoElem.srcObject = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions).then(gotMedia)
+		videoElem.srcObject = await navigator.mediaDevices.getUserMedia(displayMediaOptions).then(gotMedia)
 		// dumpOptionsInfo()
 	} catch (err) {
 		if (videoElem != null)
