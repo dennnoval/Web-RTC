@@ -42,23 +42,23 @@ async function startCapture() {
 }
 
 function stopCapture() {
-	let tracks = videoElem.srcObject.getTracks();
-	tracks.forEach(track => track.stop());
-	videoElem.srcObject = null;
+	let tracks = videoElem.srcObject.getTracks()
+	tracks.forEach(track => track.stop())
+	videoElem.srcObject = null
 }
 
 function dumpOptionsInfo() {
-	const videoTrack = videoElem.srcObject.getVideoTracks()[0];
+	const videoTrack = videoElem.srcObject.getVideoTracks()[0]
 
-	console.info("Track settings: ");
-	console.info(JSON.stringify(videoTrack.getSettings(), null, 2));
-	console.info("Track constraints: ");
-	console.info(JSON.stringify(videoTrack.getConstraints(), null, 2));
+	console.info("Track settings: ")
+	console.info(JSON.stringify(videoTrack.getSettings(), null, 2))
+	console.info("Track constraints: ")
+	console.info(JSON.stringify(videoTrack.getConstraints(), null, 2))
 }
 
 if (logElem !== null) {
-	console.log = msg => logElem.innerHTML += `${msg}<br>`;
-	console.error = msg => logElem.innerHTML += `<span class="error">${msg}</span><br>`;
-	console.warn = msg => logElem.innerHTML += `<span class="warn">${msg}</span><br>`;
-	console.info = msg => logElem.innerHTML += `<span class="info">${msg}</span><br>`;
+	console.log = msg => logElem.innerHTML += `${msg}<br>`
+	console.error = msg => logElem.innerHTML += `<span class="error">${msg}</span><br>`
+	console.warn = msg => logElem.innerHTML += `<span class="warn">${msg}</span><br>`
+	console.info = msg => logElem.innerHTML += `<span class="info">${msg}</span><br>`
 }
