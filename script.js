@@ -4,7 +4,7 @@ const startElem = document.getElementById("start")
 const stopElem = document.getElementById("stop")
 
 function gotMedia (stream) {
-	var peer1 = new SimplePeer({ initiator: true, stream: stream })
+	var peer1 = new SimplePeer({ initiator: location.hash === '#1', stream: stream })
 	var peer2 = new SimplePeer()
 
 	peer1.on('signal', data => {
@@ -41,9 +41,12 @@ function startCapture() {
 		if (videoElem != null)
 			console.error(`Error: ${err}`)
 	}*/
-	navigator.mediaDevices.getDisplayMedia(displayMediaOptions)
+	return navigator.mediaDevices.getDisplayMedia(displayMediaOptions)
 		.then(gotMedia)
-		.catch((err) => {console.error(`Error: ${err}`)})
+		.catch((err) => {
+			console.error(`Error: ${err}`)
+			return null
+		})
 
 }
 
