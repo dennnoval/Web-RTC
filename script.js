@@ -42,9 +42,11 @@ async function startCapture() {
 }
 
 function stopCapture() {
-	let tracks = videoElem.srcObject.getTracks()
-	tracks.forEach(track => track.stop())
-	videoElem.srcObject = null
+	if (videoElem !== null) {
+		let tracks = videoElem.srcObject.getTracks()
+		tracks.forEach(track => track.stop())
+		videoElem.srcObject = null
+	}
 }
 
 function dumpOptionsInfo() {
