@@ -32,7 +32,7 @@ const displayMediaOptions = {
 }
 
 async function startCapture() {
-	await navigator.mediaDevices.getUserMedia(displayMediaOptions)
+	await navigator.mediaDevices.getDisplayMedia(displayMediaOptions)
 		.then(gotMedia)
 		.catch((err) => {
 			console.error(`Error: ${err}`)
