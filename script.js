@@ -31,14 +31,16 @@ const displayMediaOptions = {
 	audio: false
 }
 
-function startCapture() {
+async function startCapture() {
 	if (logElem !== null)
 		logElem.innerHTML = ""
-	return navigator.mediaDevices.getDisplayMedia(displayMediaOptions)
-		.then(gotMedia)
-		.catch(err => {
+	try {
+		videoElem.srcObject = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions).then(gotMedia)
+		dumpOptionsInfo()
+	} catch (err) {
+		if (videoElem != null)
 			console.error(`Error: ${err}`)
-		})
+	}
 }
 
 function stopCapture() {
