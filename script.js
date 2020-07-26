@@ -4,8 +4,8 @@ const startElem = document.getElementById("start")
 const stopElem = document.getElementById("stop")
 
 function gotMedia (stream) {
-	var peer1 = new Peer({ initiator: true, stream: stream })
-	var peer2 = new Peer()
+	var peer1 = new SimplePeer({ initiator: true, stream: stream })
+	var peer2 = new SimplePeer()
 
 	peer1.on('signal', data => {
 		peer2.signal(data)
@@ -21,7 +21,7 @@ function gotMedia (stream) {
 		} else {
 			videoElem.src = window.URL.createObjectURL(stream) // for older browsers
 		}
-		video.play()
+		videoElem.play()
 	})
 }
 
