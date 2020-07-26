@@ -3,9 +3,9 @@ const logElem = document.getElementById("log")
 const startElem = document.getElementById("start")
 const stopElem = document.getElementById("stop")
 
-function gotMedia(stream) {
-	var peer1 = new SimplePeer({initiator: true, stream: true})
-	var peer2 = new SimplePeer()
+function gotMedia (stream) {
+	var peer1 = new Peer({ initiator: true, stream: stream })
+	var peer2 = new Peer()
 
 	peer1.on('signal', data => {
 		peer2.signal(data)
@@ -16,14 +16,14 @@ function gotMedia(stream) {
 	})
 
 	peer2.on('stream', stream => {
-		if ("srcObject" in videoElem) {
+		if ('srcObject' in video) {
 			videoElem.srcObject = stream
 		} else {
-			videoElem.src = window.URL.createObjectURL(stream)
+			videoElem.src = window.URL.createObjectURL(stream) // for older browsers
 		}
+		video.play()
 	})
 }
-
 
 // Options for getDisplayMedia()
 const displayMediaOptions = {
@@ -31,8 +31,8 @@ const displayMediaOptions = {
 	audio: false
 }
 
-async function startCapture() {
-	if (logElem !== null)
+function startCapture() {
+	/**if (logElem !== null)
 		logElem.innerHTML = ""
 	try {
 		videoElem.srcObject = await navigator.mediaDevices.getUserMedia(displayMediaOptions).then(gotMedia)
@@ -40,7 +40,12 @@ async function startCapture() {
 	} catch (err) {
 		if (videoElem != null)
 			console.error(`Error: ${err}`)
-	}
+	}*/
+	navigator.mediaDevices.getUserMedia({
+	  video: true,
+	  audio: true
+	}).then(gotMedia).catch(() => {})
+
 }
 
 function stopCapture() {
